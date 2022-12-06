@@ -16,19 +16,16 @@ int main()
     {
       case Result::lose:
       {
-        sleep_for(1s);
         std::cout << "You lost!\n";
         break;
       }
       case Result::win:
       {
-        sleep_for(1s);
         std::cout << "You won!\n";
         break;
       }
       case Result::tie:
       {
-        sleep_for(1s);
         std::cout << "The game ended in a draw!\n";
         break;
       }

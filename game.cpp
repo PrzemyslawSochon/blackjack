@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <vector>
 
+/********The beginning of Player class body*********/
 Player::Player() 
 {
     m_score=0;
@@ -17,8 +18,12 @@ int Player::getScore() const
     return m_score;
 }
 
+//In this version of Blackjack aces can give either 1 or 11 points.
 inline void Player::evaluateAces()
 {
+
+//If player's score indicates loss (surpassed point threshold from settings.hpp)
+//the game subtracts 10 points for every ace in player's hand.
     while(m_score>g_maximumScore && m_aces>0)
     {
         m_score-=10;
@@ -26,18 +31,20 @@ inline void Player::evaluateAces()
     }
 }
 
+//Note the passing by reference. It keeps changes within the Deck itself.
 Card Player::drawCard(Deck& deck)
 {
     m_hand.push_back(deck.dealCard());
 
-    Card lastCard{m_hand.back()};
+    Card lastDrawnCard{m_hand.back()};
 
-    if(lastCard.getValue()==11) {++m_aces;}
+    //keep track of drawn aces
+    if(lastDrawnCard.getValue()==11) {++m_aces;}
 
-    int value = lastCard.getValue();
+    int value = lastDrawnCard.getValue();
     m_score+=value;
 
-    return lastCard;
+    return lastDrawnCard;
 }
 
 Card Player::showCard() const
@@ -49,11 +56,10 @@ bool Player::isBust()
 {
     return(m_score>g_maximumScore);
 }
-/*****end of Player class body*****/
+/********The end of Player class body*********/
 
 bool playerWantsHit()
 {
-    sleep_for(2s);
     while (true)
     {
         std::cout << "Hit or stand? ";
@@ -66,9 +72,9 @@ bool playerWantsHit()
             throw std::runtime_error("Invalid input.");
         }
 
-        //forgiving extraction, capital letters and words work
         else
         {
+            //Ignores everything after 1st char i.e. buffer works with words and sentences.
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             switch (ch)
@@ -102,7 +108,6 @@ bool playerTurn(Deck& deck, Player& player)
                 std::cout << "You were dealt ";
                 sleep_for(1s);
                 card.print();
-                sleep_for(1s);
                 std::cout << " and now have " << player.getScore() << " points.\n";
             }
             else
@@ -116,7 +121,7 @@ bool playerTurn(Deck& deck, Player& player)
 
 bool dealerTurn(Deck& deck, Player& dealer)
 {
-    // Draw cards until we reach the minimum value.
+    //Computer draws cards until it reaches value from settings.hpp
     while (dealer.getScore() < g_minimumDealerScore)
     {
         Card card{ dealer.drawCard(deck) };
@@ -161,11 +166,13 @@ Result playBlackjack(Deck& deck)
     sleep_for(1s);
     player.showCard().print();
     player.drawCard(deck);
+
     sleep_for(2s);
     std::cout << "\nYou drawn ";
     player.showCard().print();
     sleep_for(2s);
     player.evaluateAces();
+
     std::cout << "\nYou have: " << player.getScore() << " points.\n";
 
     if (playerTurn(deck, player))
@@ -180,7 +187,7 @@ Result playBlackjack(Deck& deck)
         return Result::win;
     }
 
-    //if both players stand and none busted, compare their points 
+    //If both players stand and none busted, compare their points.
 
     if(player.getScore() < dealer.getScore()) {return Result::lose;}
     else if (player.getScore() > dealer.getScore()) {return Result::win;}

@@ -7,7 +7,7 @@ class Player
     public:
 };
 
-//default is needed to initialise array of cards in future Deck class
+//default is needed to initialise array of cards in upcoming Deck class
 Card::Card() = default;
 
 Card::Card(CardRank rank, CardSuit suit)
