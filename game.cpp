@@ -173,7 +173,7 @@ Result playBlackjack(Deck& deck)
     sleep_for(2s);
     player.evaluateAces();
 
-    std::cout << "\nYou have: " << player.getScore() << " points.\n";
+    std::cout << "\nYou have " << player.getScore() << " points.\n";
 
     if (playerTurn(deck, player))
     {
