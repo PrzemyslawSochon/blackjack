@@ -8,7 +8,7 @@ Deck::Deck()
 {
     Index index{0};
 
-    //populate all cards in deck with unique suits and ranks
+    //populate all cards in deck with 52 unique suits and ranks
     for (int suit{ 0 }; suit < static_cast<int>(Card::CardSuit::max_suits); ++suit)
     {
         for (int rank{ 0 }; rank < static_cast<int>(Card::CardRank::max_ranks); ++rank)
