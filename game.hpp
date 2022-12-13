@@ -48,3 +48,4 @@ bool playerWantsHit();
 bool playerTurn(Deck& deck, Player& player);
 bool dealerTurn(Deck& deck, Player& dealer);
 Result playBlackjack(Deck& deck);
+bool askForReplay();

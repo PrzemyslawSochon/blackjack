@@ -6,6 +6,10 @@
 
 int main()
 {
+  bool wanna_play{true};
+  while(wanna_play)
+  {
+
   Deck deck{};
 
   try
@@ -17,16 +21,19 @@ int main()
       case Result::lose:
       {
         std::cout << "You lost!\n";
+        wanna_play=askForReplay();
         break;
       }
       case Result::win:
       {
         std::cout << "You won!\n";
+        wanna_play=askForReplay();
         break;
       }
       case Result::tie:
       {
         std::cout << "The game ended in a draw!\n";
+        wanna_play=askForReplay();
         break;
       }
       default:
@@ -38,8 +45,11 @@ int main()
   {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cerr << e.what() << " Please, try again.\n";
+    std::cerr << e.what() << "Error, try again.\n";
   }
+  }
+
+  std::cout << "Thank you for playing! The casino is closing down...\n";
 
   return 0;
 }

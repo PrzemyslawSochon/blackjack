@@ -74,7 +74,7 @@ bool playerWantsHit()
 
         else
         {
-            //Ignores everything after 1st char i.e. buffer works with words and sentences.
+            //Ignores everything after 1st char i.e. input works with words and sentences.
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             switch (ch)
@@ -167,10 +167,10 @@ Result playBlackjack(Deck& deck)
     player.showCard().print();
     player.drawCard(deck);
 
-    sleep_for(2s);
+    sleep_for(1s);
     std::cout << "\nYou drawn ";
     player.showCard().print();
-    sleep_for(2s);
+    sleep_for(1s);
     player.evaluateAces();
 
     std::cout << "\nYou have " << player.getScore() << " points.\n";
@@ -192,4 +192,36 @@ Result playBlackjack(Deck& deck)
     if(player.getScore() < dealer.getScore()) {return Result::lose;}
     else if (player.getScore() > dealer.getScore()) {return Result::win;}
     else {return Result::tie;}
+}
+
+bool askForReplay()
+{
+    while (true)
+    {
+        std::cout << "Do you want to play again? ";
+
+        char ch{};
+        std::cin >> ch;
+
+        if(!std::cin)
+        {
+            throw std::runtime_error("Invalid input.");
+        }
+
+        else
+        {
+            //Ignores everything after 1st char i.e. input works with words and sentences.
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            switch (ch)
+            {
+            case 'y':
+            case 'Y':
+                return true;
+            case 'n':
+            case 'N':
+                return false;
+            }
+        }
+    }
 }
