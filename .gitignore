@@ -35,3 +35,8 @@
 *.exe
 *.out
 *.app
+*.apk
+*.msi
+
+# VS Code config files
+*.editorconfig
