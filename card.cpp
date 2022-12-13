@@ -2,12 +2,7 @@
 #include <cassert>
 #include <iostream>
 
-class Player
-{
-    public:
-};
-
-//default is needed to initialise array of cards in upcoming Deck class
+//default is needed to correctly initialise array of cards in upcoming Deck class
 Card::Card() = default;
 
 Card::Card(CardRank rank, CardSuit suit)
